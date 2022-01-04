@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @GilsonManuel09
 - 👀 I’m interested in Programming
-- 🌱 I’m currently learning Dart
+- 🌱 I’m currently learning Dart/Python
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me ...
 
