@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.post demo</title>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+
+<h2>Diabetes Prediction Test</h2>
+
+<form action="http://127.0.0.1:8000/predict" id="predictDiabetes">
+    <label for="Pregnancies">Pregnancies:</label><br>
+    <input type="number" id="Pregnancies" name="Pregnancies"><br><br>
+    <label for="Glucose">Glucose:</label><br>
+    <input type="number" id="Glucose" name="Glucose"><br><br>
+    <label for="BloodPressure">BloodPressure:</label><br>
+    <input type="number" id="BloodPressure" name="BloodPressure"><br><br>
+    <label for="SkinThickness">SkinThickness:</label><br>
+    <input type="number" id="SkinThickness" name="SkinThickness"><br><br>
+    <label for="Insulin">Insulin:</label><br>
+    <input type="number" id="Insulin" name="Insulin"><br><br>
+    <label for="BMI">BMI:</label><br>
+    <input type="number" id="BMI" name="BMI" step="0.00001"><br><br>
+    <label for="DiabetesPedigreeFunction">DiabetesPedigreeFunction:</label><br>
+    <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="0.00001"><br><br>
+    <label for="Age">Age:</label><br>
+    <input type="number" id="Age" name="Age"><br><br>
+    <input type="submit" value="Submit">
+</form> 
+
+
+<br><br>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+
+<script>
+    // Attach a submit handler to the form
+    $( "#predictDiabetes" ).submit(function( event ) {
+     
+      // Stop form from submitting normally
+      event.preventDefault();
+     
+      // Get some values from elements on the page:
+      var values = {};
+      $.each($( this ).serializeArray(), function(i, field) {
+            if (!isNaN(field.value)) { //check if value is convertible to number
+                values[field.name] = Number(field.value);
+            } else {
+                values[field.name] = field.value;
+            }
+            //values[field.name] = field.value;
+        });
+
+      url = $( this ).attr( "action" );
+     
+      // Send the data using post
+      $.ajax({
+        url:url,
+        type:"POST",
+        data:JSON.stringify(values),
+        contentType:"application/json; charset=utf-8"
+      }).done(function(data) {
+            if (data["prediction"] == 1){
+                $( "#result" ).empty().append( "Our magic model predicts you will have diabetes! :(" ).css({ 'color': 'red', 'font-size': '150%' });
+            } else {
+                $( "#result" ).empty().append( "Our magic model predicts you won't have diabetes! :)" ).css({ 'color': 'green', 'font-size': '150%' });
+            }
+        })
+        .fail(function() {
+            alert( "error" );
+        })
+
+    });
+    
+    </script>
+
+
+</body>
+</html>

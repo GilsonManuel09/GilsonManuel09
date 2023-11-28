@@ -1,0 +1,6 @@
+name: rumos-class-oml
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+prefix: C:\Users\gilso\miniconda3\envs\rumos-class-oml
